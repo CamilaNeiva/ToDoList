@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Botao,
   Container,
@@ -21,7 +21,9 @@ import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { v4 } from 'uuid'
 
 export const App = () => {
-  const [lista, setLista] = useState([])
+  const [lista, setLista] = useState(
+    JSON.parse(localStorage.getItem('lista')) ?? []
+  )
   const [texto, setTexto] = useState('')
   const [modal, setModal] = useState(false)
   const [textoModal, setTextoModal] = useState('')
@@ -78,6 +80,10 @@ export const App = () => {
     const b = lista.map((item) => (item.id === id ? novoItem : item))
     setLista(b)
   }
+
+  useEffect(() => {
+    localStorage.setItem('lista', JSON.stringify(lista))
+  }, [lista])
 
   return (
     <Container>
