@@ -13,6 +13,7 @@ import {
   WrapperIcone
 } from './style'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { v4 } from 'uuid'
 
 export const App = () => {
   const [lista, setLista] = useState([])
@@ -20,8 +21,12 @@ export const App = () => {
 
   const adicionarItem = (event) => {
     event.preventDefault()
-    setLista([...lista, { texto: texto, check: false }])
+    setLista([...lista, { texto: texto, id: v4(), check: false }])
     setTexto('')
+  }
+
+  const excluir = (id) => {
+    setLista(lista.filter((item) => item.id !== id))
   }
 
   return (
@@ -37,16 +42,16 @@ export const App = () => {
         <Botao type="submit">Adicionar</Botao>
       </Formulario>
       <ContainerLista>
-        {lista.map(({ texto, check }) => {
+        {lista.map(({ texto, id, check }) => {
           return (
-            <Item>
+            <Item key={id}>
               <Wrapper>
                 <input type="checkbox" checked={check} />
                 <Texto riscarTexto={check}>{texto}</Texto>
               </Wrapper>
               <WrapperIcone>
                 <Icone icon={faEdit}></Icone>
-                <Icone icon={faTrashAlt}></Icone>
+                <Icone onClick={() => excluir(id)} icon={faTrashAlt}></Icone>
               </WrapperIcone>
             </Item>
           )
