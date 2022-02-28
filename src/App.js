@@ -67,6 +67,18 @@ export const App = () => {
     fecharModal()
   }
 
+  const ticar = (check, id) => {
+    const a = lista.find((item) => {
+      return item.id === id
+    })
+
+    const novoItem = { ...a, check: check ? false : true }
+    const novoItem2 = { ...a, check: !check }
+
+    const b = lista.map((item) => (item.id === id ? novoItem : item))
+    setLista(b)
+  }
+
   return (
     <Container>
       <Titulo>My To Do List</Titulo>
@@ -84,7 +96,11 @@ export const App = () => {
           return (
             <Item key={id}>
               <Wrapper>
-                <input type="checkbox" checked={check} />
+                <input
+                  type="checkbox"
+                  checked={check}
+                  onClick={() => ticar(check, id)}
+                />
                 <Texto riscarTexto={check}>{texto}</Texto>
               </Wrapper>
               <WrapperIcone>
