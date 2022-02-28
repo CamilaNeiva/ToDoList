@@ -10,7 +10,12 @@ import {
   Wrapper,
   Texto,
   Icone,
-  WrapperIcone
+  WrapperIcone,
+  ModalContainer,
+  Modal,
+  BotaoFecharModal,
+  InputModal,
+  BotaoSalvarModal
 } from './style'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { v4 } from 'uuid'
@@ -18,6 +23,9 @@ import { v4 } from 'uuid'
 export const App = () => {
   const [lista, setLista] = useState([])
   const [texto, setTexto] = useState('')
+  const [modal, setModal] = useState(false)
+  const [textoModal, setTextoModal] = useState('')
+  const [idAtual, setIdAtual] = useState('')
 
   const adicionarItem = (event) => {
     event.preventDefault()
@@ -27,6 +35,36 @@ export const App = () => {
 
   const excluir = (id) => {
     setLista(lista.filter((item) => item.id !== id))
+  }
+
+  const abrirEdicao = (id, texto) => {
+    setModal(true)
+    setTextoModal(texto)
+    setIdAtual(id)
+  }
+
+  const fecharModal = () => {
+    setModal(false)
+  }
+
+  const finalizarEdicao = (event) => {
+    event.preventDefault()
+    const b = lista.find((item) => {
+      return item.id === idAtual
+    })
+    const novoItem = { texto: textoModal, id: idAtual, check: b.check }
+    const novoItem2 = { texto: textoModal, id: b.id, check: b.check }
+    const novoItem3 = { ...b, texto: textoModal }
+
+    const a = lista.map((item) => {
+      if (item.id === idAtual) {
+        return novoItem
+      } else {
+        return item
+      }
+    })
+    setLista(a)
+    fecharModal()
   }
 
   return (
@@ -50,13 +88,32 @@ export const App = () => {
                 <Texto riscarTexto={check}>{texto}</Texto>
               </Wrapper>
               <WrapperIcone>
-                <Icone icon={faEdit}></Icone>
+                <Icone
+                  onClick={() => abrirEdicao(id, texto)}
+                  icon={faEdit}
+                ></Icone>
                 <Icone onClick={() => excluir(id)} icon={faTrashAlt}></Icone>
               </WrapperIcone>
             </Item>
           )
         })}
       </ContainerLista>
+      {modal && (
+        <ModalContainer>
+          <Modal>
+            <BotaoFecharModal onClick={fecharModal}>x</BotaoFecharModal>
+            <form onSubmit={finalizarEdicao}>
+              <InputModal
+                type="text"
+                htmlFor="text"
+                value={textoModal}
+                onChange={(event) => setTextoModal(event.target.value)}
+              />
+              <BotaoSalvarModal>Salvar</BotaoSalvarModal>
+            </form>
+          </Modal>
+        </ModalContainer>
+      )}
     </Container>
   )
 }

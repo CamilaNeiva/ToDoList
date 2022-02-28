@@ -79,9 +79,11 @@ export const Item = styled.li`
   padding: 10px;
   align-items: center;
 `
+
 export const Wrapper = styled.div`
   display: flex;
 `
+
 export const Texto = styled.p`
   margin-left: 5px;
   text-decoration: ${({ riscarTexto }) =>
@@ -100,6 +102,64 @@ export const Icone = styled(FontAwesomeIcon)`
     }
   }
 `
+
 export const WrapperIcone = styled.div`
   display: flex;
+`
+
+export const ModalContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+`
+
+export const Modal = styled.div`
+  background: white;
+  padding: 25px;
+  border: 3px solid #90bdad;
+  box-shadow: 0 0 0 5px white;
+  position: relative;
+`
+
+export const InputModal = styled.input`
+  width: 600px;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px dashed #90bdad;
+`
+
+export const BotaoFecharModal = styled.button`
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid white;
+  top: -20px;
+  right: -20px;
+  position: absolute;
+  background: #90bdad;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+`
+
+export const BotaoSalvarModal = styled.button`
+  padding: 12px 16px;
+  border: none;
+  cursor: pointer;
+  background-color: #90bdad;
+  color: #e0f2ee;
+  &:hover {
+    background-color: #cfe5e1;
+    color: #90bdad;
+    transition: 300ms;
+  }
 `
