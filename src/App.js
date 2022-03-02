@@ -32,8 +32,10 @@ export const App = () => {
 
   const adicionarItem = (event) => {
     event.preventDefault()
-    setLista([...lista, { texto: texto, id: v4(), check: false }])
-    setTexto('')
+    if (texto) {
+      setLista([...lista, { texto: texto, id: v4(), check: false }])
+      setTexto('')
+    }
   }
 
   const excluir = (id) => {
