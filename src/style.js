@@ -119,6 +119,7 @@ export const ModalContainer = styled.div`
   z-index: 2000;
   justify-content: center;
   align-items: center;
+  padding: 50px;
 `
 
 export const Modal = styled.div`
@@ -127,13 +128,15 @@ export const Modal = styled.div`
   border: 3px solid #90bdad;
   box-shadow: 0 0 0 5px white;
   position: relative;
+  width: 100%;
+  max-width: 700px;
 `
 
 export const InputModal = styled.input`
-  width: 600px;
   box-sizing: border-box;
   padding: 10px;
   border: 1px dashed #90bdad;
+  flex-grow: 1;
 `
 
 export const BotaoFecharModal = styled.button`
@@ -162,4 +165,8 @@ export const BotaoSalvarModal = styled.button`
     color: #90bdad;
     transition: 300ms;
   }
+`
+export const FormularioEdicao = styled.form`
+  display: flex;
+  width: 100%;
 `

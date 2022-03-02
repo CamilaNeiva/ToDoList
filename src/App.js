@@ -15,7 +15,8 @@ import {
   Modal,
   BotaoFecharModal,
   InputModal,
-  BotaoSalvarModal
+  BotaoSalvarModal,
+  FormularioEdicao
 } from './style'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { v4 } from 'uuid'
@@ -81,9 +82,26 @@ export const App = () => {
     setLista(b)
   }
 
+  const fecharModalEsc = (event) => {
+    if (event.key.toUpperCase() === 'ESCAPE' && modal) {
+      setModal(false)
+    }
+  }
+
+  const fecharModalClick = (event) => {
+    if (event.target.id === 'modalContainer') {
+      setModal(false)
+    }
+  }
+
   useEffect(() => {
     localStorage.setItem('lista', JSON.stringify(lista))
   }, [lista])
+
+  useEffect(() => {
+    window.addEventListener('keydown', fecharModalEsc)
+    return () => window.removeEventListener('keydown', fecharModalEsc)
+  }, [modal])
 
   return (
     <Container>
@@ -121,10 +139,10 @@ export const App = () => {
         })}
       </ContainerLista>
       {modal && (
-        <ModalContainer>
+        <ModalContainer id="modalContainer" onClick={fecharModalClick}>
           <Modal>
             <BotaoFecharModal onClick={fecharModal}>x</BotaoFecharModal>
-            <form onSubmit={finalizarEdicao}>
+            <FormularioEdicao onSubmit={finalizarEdicao}>
               <InputModal
                 type="text"
                 htmlFor="text"
@@ -132,7 +150,7 @@ export const App = () => {
                 onChange={(event) => setTextoModal(event.target.value)}
               />
               <BotaoSalvarModal>Salvar</BotaoSalvarModal>
-            </form>
+            </FormularioEdicao>
           </Modal>
         </ModalContainer>
       )}
